@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const serverId = "112408194066110";
 
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       `https://games.roblox.com/v1/games/${serverId}/servers/Public?limit=100`
     );
 
-    const servers = response.data.data;
+    const servers = response.data.data || [];
 
     const result = servers.map((s) => ({
       id: s.id,
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ servers: result });
   } catch (error) {
-    console.error(error.message);
+    console.error('Erro na função serverless:', error.message);
     res.status(500).json({ error: 'Não foi possível buscar os dados do servidor' });
   }
 }
