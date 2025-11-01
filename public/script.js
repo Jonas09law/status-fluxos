@@ -8,14 +8,18 @@ async function fetchServers() {
     `;
 
     try {
-        const response = await fetch('/api/status'); 
+        const response = await fetch('/api/status');
         const data = await response.json();
         const servers = data.servers;
 
         container.innerHTML = '';
         
         if (!servers || servers.length === 0) {
-            container.innerHTML = `<p style="text-align:center;color:rgba(255,255,255,0.5);">Nenhum servidor disponível no momento.</p>`;
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: rgba(255,255,255,0.5);">
+                    <p>Nenhum servidor disponível no momento.</p>
+                </div>
+            `;
             return;
         }
 
@@ -31,11 +35,16 @@ async function fetchServers() {
             container.appendChild(card);
         });
 
-    } catch (err) {
-        container.innerHTML = `<p style="text-align:center;color:#ef4444;">Erro ao carregar servidores. Tente novamente mais tarde.</p>`;
-        console.error(err);
+    } catch (error) {
+        container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #ef4444;">
+                <p>Erro ao carregar servidores. Tente novamente mais tarde.</p>
+            </div>
+        `;
+        console.error('Erro ao buscar servidores:', error);
     }
 }
 
 fetchServers();
+
 setInterval(fetchServers, 60000);
