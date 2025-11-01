@@ -23,14 +23,17 @@ async function fetchServers() {
             return;
         }
 
-        servers.forEach((server, i) => {
+        servers.forEach((server, index) => {
             const card = document.createElement('div');
-            card.className = 'server-card';
+            card.classList.add('server-card');
             card.innerHTML = `
-                <h2>Servidor #${i+1}</h2>
+                <img src="https://media.discordapp.net/attachments/1424266949776511016/1429441384036700293/5735f7572324423abfa553f0af56e167.png?ex=69074a07&is=6905f887&hm=ecfabc5402971242705b4c450e0e1fcfd298f0307e586b8054c2557fe4bc57ef&=&format=webp&quality=lossless&width=170&height=170" alt="Logo do Servidor">
+                <h2>Servidor #${index + 1}</h2>
                 <div class="status ${server.status.toLowerCase()}">${server.status}</div>
                 <div class="players">${server.playing} / ${server.maxPlayers} Jogadores</div>
-                <a href="https://www.roblox.com/games/${server.id}" target="_blank">Conectar</a>
+                <div class="link">
+                    <a href="https://www.roblox.com/games/112408194066110" target="_blank">Conectar</a>
+                </div>
             `;
             container.appendChild(card);
         });
